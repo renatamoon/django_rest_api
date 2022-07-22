@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Base(models.Model):
-    criation_date = models.DateTimeField(auto_now=True)
+    creation_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
 
