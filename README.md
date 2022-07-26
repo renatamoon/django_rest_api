@@ -4,6 +4,8 @@ Repository to upload course files and projects of DJANGO REST FRAMEWORK
 ## API REST
 ### O que é REST?
 
+##### - link da documentação: https://www.django-rest-framework.org/
+
 - Representational State Transfer ou Transferencia Representacional de Estado.
 - RESTFUL - padrão de criação de APIs. É a mesma coisa.
 - Interface de comunicação HTTP e APIs. Uma API é uma forma de comunicação. 
@@ -46,3 +48,37 @@ Exemplo: coleção: /api/v1/produtos
 - APLICAR AS MIGRAÇÕES: `python manage.py migrate`
 - CRIAR UM SUPERUSUARIO: `python manage.py createsuperuser`
 - SUBIR SERVIDOR LOCAL PARA ACESSO DA ROTA: `python manage.py runserver`
+
+---
+
+### CRIAÇÃO DA API REST
+
+Com a aplicação Django já rodando, agora vamos fazer a instalação do Django Rest API:
+
+- INSTALAÇÃO DO DJANGO REST API: `pip install djangorestframework markdown django-filter` (adicionando a documentação + filtros)
+
+- INSTALLED APPS:
+
+```
+    'django_filters',
+    'rest_framework',
+    'courses',
+```
+---
+
+### PERMISSIONS E AUTHENTICATIONS NO DJANGO REST
+
+Se o usuário for authenticado, então ele pode usar todas as rotas de post, delete, get e update. Caso contrário, só tem acesso ao get.
+Abaixo a configuração para authenticar o usuário.
+
+```
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication'
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    )
+}
+```
