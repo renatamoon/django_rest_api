@@ -15,9 +15,7 @@ class CourseAPIView(APIView):
         courses = Course.objects.all()
         serializer = CourseSerializer(courses, many=True)
 
-        response = Response(serializer.data)
-
-        return response
+        return Response(serializer.data)
 
 
 class RatingAPIView(APIView):
@@ -28,6 +26,4 @@ class RatingAPIView(APIView):
         ratings = Rating.objects.all()
         serializer = RatingSerializer(ratings, many=True)
 
-        response = Response(serializer.data)
-
-        return response
+        return Response(serializer.data)

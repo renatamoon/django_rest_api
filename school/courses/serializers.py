@@ -2,7 +2,7 @@
 from rest_framework import serializers
 
 # PROJECT IMPORTS
-from models import Course, Rating
+from .models import Course, Rating
 
 
 class RatingSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class RatingSerializer(serializers.ModelSerializer):
         model = Rating
 
         # fields you want to show when the user access the api - all of this are existing fields of the main model
-        field = (
+        fields = (
             'id',
             'course',
             'name',
