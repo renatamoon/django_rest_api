@@ -8,5 +8,7 @@ from .views import CourseAPIView, RatingAPIView
 # url patterns is used to say that the route will use a view:
 urlpatterns = [
     path('courses/', CourseAPIView.as_view(), name='courses'),
-    path('ratings/', RatingAPIView.as_view(), name='ratings')
+    path('ratings/', RatingAPIView.as_view(), name='ratings'),
+    path('courses/<int:pk>', CourseAPIView.as_view(), name='course'),
+    path('ratings/<int:pk>', RatingAPIView.as_view(), name='rating')
 ]
