@@ -27,6 +27,12 @@ class RatingsAPIView(generics.ListCreateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
 
+    def get_queryset(self):
+        # get all the ratings filtered by a course, if not, only all ratings.
+        if self.kwargs.get('course_pk'):
+            return self.queryset.filter(course_id=self.kwargs.get('course_id'))
+        return self.queryset.all
+
 
 class RatingAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Rating.objects.all()
