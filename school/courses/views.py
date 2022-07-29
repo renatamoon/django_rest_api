@@ -1,5 +1,6 @@
 # STANDARD IMPORTS
 from rest_framework import generics
+from rest_framework.generics import get_object_or_404
 
 # PROJECT IMPORTS
 from .models import Course, Rating
@@ -30,10 +31,25 @@ class RatingsAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         # get all the ratings filtered by a course, if not, only all ratings.
         if self.kwargs.get('course_pk'):
-            return self.queryset.filter(course_id=self.kwargs.get('course_id'))
+            return self.queryset.filter(course_id=self.kwargs.get('course_pk'))
         return self.queryset.all
 
 
 class RatingAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
+
+    def get_object(self):
+        if self.kwargs.get('course_pk'):
+            response = get_object_or_404(
+                self.get_queryset(),
+                course_id=self.kwargs.get('course_id'),
+                pk=self.kwargs.get('ratings_pk'))
+            return response
+
+        response = get_object_or_404(
+            # this function will get the object or it will raise an error
+            self.get_queryset(),
+            pk=self.kwargs.get('ratings_pk')
+        )
+        return response
