@@ -7,6 +7,7 @@ from rest_framework.generics import get_object_or_404
 # PROJECT IMPORTS
 from .models import Course, Rating
 from .serializers import CourseSerializer, RatingSerializer
+from .permissions import IsSuperUser
 
 
 # GET METHOD
@@ -63,7 +64,11 @@ class RatingAPIView(generics.RetrieveUpdateDestroyAPIView):
 # all of this code below replaces the code above
 # the view set will implement the GET, POST, DELETE, PATCH
 class CourseViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.DjangoModelPermissions,)
+    permission_classes = (
+        IsSuperUser,  # if this class solves the problem of permission,
+        # it won't use the second class (DjangoModelPermissions)
+        permissions.DjangoModelPermissions,  # if the permission was not solved as above, then it wil use this one
+    )
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
