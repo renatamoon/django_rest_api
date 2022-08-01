@@ -1,5 +1,5 @@
 # STANDARD IMPORTS
-from rest_framework import generics, viewsets
+from rest_framework import generics, viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
@@ -73,6 +73,22 @@ class CourseViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+"""
 class RatingViewSet(viewsets.ModelViewSet):
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
+    """
+
+
+# this rating view set is the same thing as Rating View Set above. If you don't want to list or update something, just
+# do not instantiate below
+class RatingViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet
+):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
