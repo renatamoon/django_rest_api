@@ -153,5 +153,15 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2  # 2 elements per page
+    'PAGE_SIZE': 2,  # 2 elements per page
+
+    # number of requisitions per minute of anonymous users and logged users
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ),
+    'DEFAULT_THROTTLE_RATE': {
+        'anon': '5/minute',  # anonymous users (also can user - second, day, month, year)
+        'user': '10/minute'  # logged users
+    }
 }
