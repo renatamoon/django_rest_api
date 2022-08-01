@@ -1,13 +1,21 @@
 # STANDARD IMPORTS
 from django.urls import path
+from rest_framework.routers import SimpleRouter
 
 # PROJECT IMPORTS
 from .views import (
     CourseAPIView,
     CoursesAPIView,
     RatingAPIView,
-    RatingsAPIView
+    RatingsAPIView,
+    CourseViewSet,
+    RatingViewSet
 )
+
+
+router = SimpleRouter
+router.register('courses', CourseViewSet)
+router.register('ratings', RatingViewSet)
 
 
 # url patterns is used to say that the route will use a view:

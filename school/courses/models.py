@@ -1,5 +1,11 @@
 # STANDARD IMPORTS
 from django.db import models
+from rest_framework import viewsets
+
+# PROJECT IMPORTS
+from school.courses.serializers import CourseSerializer, RatingSerializer
+
+"""API VERSION 1"""
 
 
 class Base(models.Model):
