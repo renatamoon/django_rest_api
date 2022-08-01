@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import rest_framework.authentication
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     # extra libs
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken' # authentication via token
 
     # self applications
     'courses',
@@ -139,7 +142,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication'
+        # 'rest_framework.authentication.SessionAuthentication', # auth via session (browser)
+        'rest_framework.authentication.TokenAuthentication'  # auth via token
     ),
 
     'DEFAULT_PERMISSION_CLASSES': (
