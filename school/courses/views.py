@@ -1,5 +1,5 @@
 # STANDARD IMPORTS
-from rest_framework import generics, viewsets, mixins
+from rest_framework import generics, viewsets, mixins, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
@@ -63,6 +63,7 @@ class RatingAPIView(generics.RetrieveUpdateDestroyAPIView):
 # all of this code below replaces the code above
 # the view set will implement the GET, POST, DELETE, PATCH
 class CourseViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.DjangoModelPermissions,)
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
