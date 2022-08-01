@@ -1,9 +1,5 @@
 # STANDARD IMPORTS
 from django.db import models
-from rest_framework import viewsets
-
-# PROJECT IMPORTS
-from school.courses.serializers import CourseSerializer, RatingSerializer
 
 """API VERSION 1"""
 
@@ -24,6 +20,8 @@ class Course(Base):
     class Meta:
         verbose_name = 'Course'
         verbose_name_plural = 'Courses'
+        ordering = ['id']  # defining the field that our application will be ordered
+        # ordering = ['-id'] - descending order
 
     def __str__(self):
         return self.title
@@ -40,6 +38,7 @@ class Rating(Base):
         verbose_name = 'Rating'
         verbose_name_plural = 'Ratings'
         unique_together = ['email', 'course']  # each person who rated the course can only rate the course once
+        ordering = ['id']  # defining the field that our application will be ordered
 
     def __str(self):
         return f'{self.name} rated the course {self.course} with the final rating of {self.rating}'

@@ -135,7 +135,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# DJANGO REST FRAMEWORK CONFIG - to authenticate and authorization
+# DJANGO REST FRAMEWORK CONFIG - to authenticate, authorization and pagination
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -146,5 +146,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
         # if the user is authenticated then he can post, delete, get and update
         # otherwise if the user is not authenticated, then he can only read (get)
-    )
+    ),
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2  # 2 elements per page
 }
