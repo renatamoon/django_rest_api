@@ -1,5 +1,6 @@
 # STANDARD IMPORTS
 from rest_framework import serializers
+from django.db.models import Avg
 
 # PROJECT IMPORTS
 from .models import Course, Rating
@@ -24,9 +25,16 @@ class RatingSerializer(serializers.ModelSerializer):
             'name',
             'email',
             'comment',
+            'rating',
             'creation_date',
             'active'
         )
+
+        def validate_rating(self, value):  # a pattern of the serializer model is that you need to put
+            # [validate_ + field you wanna validate]
+            if value in range(1, 6):
+                return value
+            raise serializers.ValidationError('The rating needs to be an integer between 1 and 5')
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -53,8 +61,9 @@ class CourseSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
-    class Meta:
+    average_ratings = serializers.SerializerMethodField()
 
+    class Meta:
         model = Course
 
         fields = (
@@ -63,7 +72,15 @@ class CourseSerializer(serializers.ModelSerializer):
             'url',
             'creation_date',
             'active',
-            'ratings'
+            'ratings',
+            'average_ratings'
         )
+
+        def get_average_ratings(self, obj):
+            average = obj.ratings.aggregate(Avg('ratings')).get('rating__avg')
+
+            if average is None:
+                return 0
+            return round(average * 2) / 2
 
 # email and password is a sensitive field, then you can hide it to be shown.
