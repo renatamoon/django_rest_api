@@ -40,4 +40,3 @@ headers = {'Authorization': 'Token 1836754829273634bjasghdg7346456564'}
 courses = requests.get('http://localhost:8000/api/v2/courses', headers=headers)
 courses_statuscode = courses.status_code
 courses_json = courses.json()
-
