@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>django_tenant</title>
+</head>
+<body>
+
+<h1> {{ tenant.name }} </h1>
+
+<h2> OUR MEMBERS </h2>
+
+<ul>
+    {% for member in members %}
+    <li> {{ member.name }}</li>
+
+    {% endfor %}
+</ul>
+
+</body>
+</html>
