@@ -82,3 +82,54 @@ REST_FRAMEWORK = {
     )
 }
 ```
+
+Depois adiciona o api-auth dentro de urls para que seja possível fazer a autenticação do usuário:
+
+```
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls'))
+]
+```
+
+- Página de login para autenticação e login do usuário: `http://127.0.0.1:8000/api-auth/login/`
+- Para fazer logout: `http://127.0.0.1:8000/api-auth/logout/`
+
+Conseguimos apenas autenticar o usuário via sessão porque colocamos `DEFAULT_AUTHENTICATION_CLASSES`
+
+
+## SERIALIZERS
+
+- Com algumas linhas podemos transformar nossos models em objetos json para lidar com as requisições das nossas apis.
+- O serializers transformam objetos json e transformam em obj python, e vice versa (deserializers).
+- Json: formato de dados textual que é facilmente lidos;
+
+#### Modelo de Serializer:
+
+```
+from rest_framework import serializers
+
+
+class RatingSerializer(serializers.ModelSerializer):
+    # create extra class configs
+    class Meta:
+        extra_kwargs = {
+            # this field here sets that the email won't be showed when you see the api, only when an user registrate
+            'email': {
+                'write_only': True
+            }
+        }
+        
+        model = Rating
+        
+        # fields you want to show when the user access the api - all of this are existing fields of the main model
+        field = (
+            'id',
+            'course',
+            'name',
+            'email',
+            'comment',
+            'creation_date',
+            'active'
+        )
+```
