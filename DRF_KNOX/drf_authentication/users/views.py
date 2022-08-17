@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
 
+# PROJECT IMPORTS
+from .serializers import RegisterSerializer
+
 
 # post a new user and generate a token
 @api_view(['POST'])
@@ -50,8 +53,26 @@ def get_user_data(request):
                 'ERROR': 'USER NOT AUTHENTICATED'
             }, status=400
         )
+
     return not_auth_response
 
 
 # Post new users and give them tokens as well
+@api_view(['POST'])
+def register_api(request):
+    serializer = RegisterSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
 
+    user = serializer.save()
+    _, token = AuthToken.objects.create(user)
+
+    register_response = Response({
+            'user_info': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email
+            },
+            'token': token
+        })
+
+    return register_response
